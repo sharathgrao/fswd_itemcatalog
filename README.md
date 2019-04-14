@@ -1,16 +1,25 @@
-# fswd_itemcatalog
-Udacity Full Stack Developer Project 4 -> Item Catalog Project
 # Item-Catalog
 Create a restaurant menu app where users can add, edit, and delete restaurants and menu items in the restaurants.
-
-##Note:
-Since the older version of the GOogle Sign-in is now depricated, we've used the newer Oauth login module.
 
 ## Setup and run the project
 ### Prerequisites
 * Python 2.7
 * Vagrant
 * VirtualBox
+
+### Google Credentials
+```
+- Update client_secrets.json file with
+```
+- Client Secret
+```
+- Client ID
+```
+- Project ID
+```
+```
+
+** These are available in your Google API Console.
 
 ### How to Run
 1. Install VirtualBox and Vagrant
@@ -45,6 +54,8 @@ $ Python menus.py
 $ Python project.py
 ```
 10. Open the browser and go to http://localhost:5000
+```
+```
 
 ### JSON endpoints
 #### Returns JSON of all restaurants

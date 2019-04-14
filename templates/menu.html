@@ -1,0 +1,45 @@
+<html>
+
+<head>
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+<script>
+  function start() {
+    gapi.load('auth2', function() {
+      auth2 = gapi.auth2.init({
+        client_id: '746467885794-7snfr9tbsif98k8dru2p7q4mi8j3u1g2.apps.googleusercontent.com'
+      });
+    });
+  }
+</script>
+
+<script src="//apis.google.com/js/platform.js?onload=start"> </script>
+</head>
+
+<body>
+
+  <div class = 'pane'>
+  <h1>{{restaurant.name}}</h1>
+{% if items !=[] %}
+<a href = '{{url_for('newMenuItem', restaurant_id = restaurant.id)}}'>Create New Item</a>
+    <div>
+    {% for i in items %}
+      <p>{{i.name}}</p>
+      <p>{{i.description}}</p>
+      <p>{{i.price}}</p>
+      <a href='{{url_for('editMenuItem', restaurant_id=restaurant.id, menu_id=i.id)}}'>Edit</a>
+      </br>
+      <a href='{{url_for('deleteMenuItem', restaurant_id=restaurant.id, menu_id=i.id)}}'>Delete</a>
+      </br>
+    {% endfor %}
+    </div>
+{% else %}
+<p> You currently have no menu items. <p>
+  <a href = '{{url_for('newMenuItem', restaurant_id = restaurant.id)}}'>Create New Item</a>
+{% endif %}
+
+</div>
+</body>
+</html>

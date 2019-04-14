@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+<script>
+  function start() {
+    gapi.load('auth2', function() {
+      auth2 = gapi.auth2.init({
+        client_id: '746467885794-7snfr9tbsif98k8dru2p7q4mi8j3u1g2.apps.googleusercontent.com'
+      });
+    });
+  }
+</script>
+
+<script src="//apis.google.com/js/platform.js?onload=start"> </script>
+</head>
+
+
+<body>
+{% include "nav.html" %}
+{% include "flash.html" %}
+
+
+<div class="pane">
+<h1>Restaurants</h1>
+
+<a href="{{url_for('newRestaurant')}}" > <h3> Create a New Restaurant </h3> </a>
+
+{% for restaurant in restaurants %}
+
+
+
+<a href = "{{url_for('restaurantMenu', restaurant_id = restaurant.id)}}"> <p>{{restaurant.name}}</p></a>
+
+<p><a href = "{{url_for('editRestaurant',restaurant_id = restaurant.id)}}">Edit Restaurant</a></p>
+
+<p> <a href = "{{url_for('deleteRestaurant',restaurant_id = restaurant.id)}}">Delete Restaurant</a> </p>
+
+
+
+
+{% endfor %}
+
+</div>
+</body>
+
+</html>
