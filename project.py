@@ -250,6 +250,8 @@ def editRestaurant(restaurant_id):
         Restaurant).filter_by(id=restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    if editedRestaurant.user_id != login_session['user_id']:
+      return "<script>alert('You are not authorized to edit this restaurant.  Please create your own restaurant in order to edit it.');</script>"
     if request.method == 'POST':
         if request.form['name']:
             editedRestaurant.name = request.form['name']
@@ -268,6 +270,8 @@ def deleteRestaurant(restaurant_id):
         Restaurant).filter_by(id=restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    if restaurantToDelete.user_id != login_session['user_id']:
+      return "<script>alert('You are not authorized to delete this restaurant.  Please create your own restaurant in order to delete.');</script>"
     if request.method == 'POST':
         session.delete(restaurantToDelete)
         flash('%s Successfully Deleted' % restaurantToDelete.name)

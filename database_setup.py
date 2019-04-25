@@ -43,7 +43,7 @@ class MenuItem(Base):
     description = Column(String(250))
     price = Column(String(8))
     restaurant_id = Column(Integer, ForeignKey('restaurant.id'))
-    restaurant = relationship(Restaurant)
+    restaurant = relationship(Restaurant, cascade="all, delete-orphan")
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
