@@ -21,7 +21,7 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "Restaurant Menu Application"
 
 # Connect to database
-engine = create_engine('sqlite:///restaurantmenu.db', connect_args={'check_same_thread': False})
+engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.bind = engine
 
 # Create session
@@ -29,6 +29,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Create anti-forgery state token
+
 
 @app.route('/login')
 def showLogin():
@@ -161,7 +162,7 @@ def gdisconnect():
     try:
         access_token = login_session.get('access_token')
         print("access token is:::", access_token)
-        if access_token is None :
+        if access_token is None:
             print('Access Token is None')
             response = make_response(
                 json.dumps('Current user not connected.'), 401)
@@ -169,23 +170,18 @@ def gdisconnect():
             return response
 
         print('In gdisconnect access token is %s', access_token)
-        #url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
-        #print url
-        #h = httplib2.Http()
-        #result = h.request(url, 'GET')[0]
         revoke = requests.post('https://accounts.google.com/o/oauth2/revoke',
          params={'token': access_token},
-         headers = {'content-type': 'application/x-www-form-urlencoded'})
-        #result = requests.post('https://accounts.google.com/o/oauth2/revoke', params={'token': login_session['access_token']}, headers = {'content-type': 'application/x-www-form-urlencoded'})
-        result = getattr(revoke, 'status_code')
-        status_code = getattr(revoke, 'status_code')
+         headers={'content-type': 'application/x-www-form-urlencoded'})
+        result=getattr(revoke, 'status_code')
+        status_code=getattr(revoke, 'status_code')
         if status_code == 200:
             del login_session['access_token']
             del login_session['gplus_id']
             del login_session['username']
             del login_session['email']
             del login_session['picture']
-            response = make_response(json.dumps('Successfully disconnected.'), 200)
+            response = make_response(json.dumps('Disconnected.'), 200)
             redirect('/restaurants')
             flash("You have Successfully logged out")
             return redirect('/restaurants')
@@ -271,7 +267,7 @@ def deleteRestaurant(restaurant_id):
     if 'username' not in login_session:
         return redirect('/login')
     if restaurantToDelete.user_id != login_session['user_id']:
-      return "<script>alert('You are not authorized to delete this restaurant.  Please create your own restaurant in order to delete.');</script>"
+      return "<script>alert('Your not authorized to delete this restaurant.');</script>"
     if request.method == 'POST':
         session.delete(restaurantToDelete)
         flash('%s Successfully Deleted' % restaurantToDelete.name)
